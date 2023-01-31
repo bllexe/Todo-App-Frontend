@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { UserServiceService } from './services/user-service.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'todo-app-frontend';
+  @ViewChild('sidenav') sidenav: MatSidenav;
+  newTodo = false;
+
+  title = 'todo-web-app';
+  mode = new FormControl('slide');
+
+  constructor(
+    public userService: UserServiceService
+  ) {}
+
+  toggolMenuClick() {
+    this.sidenav.toggle();
+  }
+
+  createNewTodo() {
+    console.log('click');
+    this.newTodo = true;
+  }
+
+  isUserLogged() {
+    return this.userService.getLoggedUser() !== null && this.userService.getLoggedUser() !== undefined;
+  }
 }
